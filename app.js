@@ -5,9 +5,9 @@ const path = require("path")
 const ownerRouter = require("./routes/ownersRouter")
 const productsRouter = require("./routes/productRouter")
 const userRouter = require("./routes/userRouter")
+const index = require("./routes/index")
 
-
-
+require("dotenv").config();
 
 const db = require("./config/mongoose-connection");
 const ownerModel = require("./models/owner-model");
@@ -18,10 +18,11 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname,"public")))
 app.set("view engine","ejs")
 
+app.use("/",index)
+
 app.use("/owners", ownerRouter);
 app.use("/users",userRouter);
 app.use("/products",productsRouter)
 
 app.listen(3000);
-
 
