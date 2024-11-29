@@ -6,6 +6,8 @@ const ownerRouter = require("./routes/ownersRouter")
 const productsRouter = require("./routes/productRouter")
 const userRouter = require("./routes/userRouter")
 const index = require("./routes/index")
+const expressSession = require("express-session"); // Add this line
+const flash = require("connect-flash");
 
 require("dotenv").config();
 
@@ -17,13 +19,12 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(
     expressSession({
+        secret: process.env.Express_SESSION_SECRET, // Load from .env
         resave: false,
-        saveUninitialized:false,
-        secret : process.env.Express_SESSION_SECRET,
-
+        saveUninitialized: false,
     })
+);
 
-)
 app.use(flash());
 
 app.use(express.static(path.join(__dirname,"public")))
